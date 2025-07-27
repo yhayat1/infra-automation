@@ -1,9 +1,7 @@
 import logging
 
 def create_machine(name, os, cpu, ram):
-    """
-    Constructs and returns a dictionary representing a VM spec.
-    """
+    # Constructs and returns a dictionary representing a VM spec.
     machine = {
         "name": name,
         "os": os,

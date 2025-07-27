@@ -12,22 +12,18 @@ json_config_file = os.path.join(configs_dir, "instances.json")
 # provisioning.log file path config
 logs_dir = os.path.join(base_dir, "logs")
 logs_file = os.path.join(logs_dir, "provisioning.log")
-# machines.py file path config
-# machines_dir = os.path.join(base_dir, "src")
-# machines_file = os.path.join(machines_dir, "machines.py")
 
 # Create log and config dirs if not exists
 os.makedirs(configs_dir, exist_ok=True)
 os.makedirs(logs_dir, exist_ok=True)
-#os.makedirs(machines_dir, exist_ok=True)
    
 # Define logging configuration
 logging.basicConfig(
     level=logging.INFO,                            # Minimum level to log
     format='%(asctime)s - %(levelname)s - %(message)s',  # Log message format
-    datefmt='%Y-%m-%d %H:%M:%S',  # <- omit milliseconds
-    filename=logs_file,                            # Optional: log to a file
-    filemode='a'                                   # 'w' to overwrite, 'a' to append
+    datefmt='%Y-%m-%d %H:%M:%S',  # Omit milliseconds
+    filename=logs_file,                            # Send teh logs to the log file
+    filemode='a'                                   # For appending the data in file
 )
 
 logging.info("Application started")
@@ -113,16 +109,13 @@ def provision_machines():
                 
                 # If all validations were passed successfully
                 while True:
-                    if name_return_status and os_return_status and cpu_specs_return_status and ram_specs_return_status:
-                        #vm_specs = {"name": name, "os": os, "cpu": cpu, "ram": ram}
+                    if name_return_status and os_return_status and cpu_specs_return_status and ram_specs_return_status:                       
+                        # Call the "create machine" module to return a dict from values
                         vm_specs = create_machine(name, os, cpu, ram)
-                        #logging.info(f"The following VM requirements has been accepted: {vm_specs}")
                         
                         # Append VM config to the json config file
                         append_vm_spec(json_config_file, vm_specs)
-                        # Append VM config to the machines.py file
-                        #append_vm_spec(machines_file, vm_specs)
-                        
+
                         # Check if the user wants to define another machine                       
                         user_input_another_vm = input(f"\nThe VM named '{name}' was created, would you like to define another machine? (yes/no) ")
                         if user_input_another_vm == "yes":
@@ -134,8 +127,8 @@ def provision_machines():
                             print("\nInvalid answer, try again")
                             continue
                     else:
-                        print(f"VM name '{name}' wasn't created due to one or more errors. see {logs_file} for details.")
-                        logging.warning(f"VM name '{name}' wasn't created due to one or more errors.")
+                        print(f"\nA VM name '{name}' wasn't created due to one or more errors. see '{logs_file}' for details.")
+                        logging.critical(f"VM name '{name}' wasn't created due to one or more errors.")
                         exit()
         elif user_input == "no":
             print("\nOk. Exiting\n")
