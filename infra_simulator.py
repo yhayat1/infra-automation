@@ -3,19 +3,40 @@ import logging
 import json
 import os
 from src.machines import create_machine
+import subprocess
+import time
 
-# Define script paths
+# Define script base dir
 base_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Define script files paths
+def define_path(dir, file):
+    dir = os.path.join(base_dir, dir)
+    os.makedirs(dir, exist_ok=True)
+    file = os.path.join(dir, file)    
+    return file
+
+json_config_file = define_path("configs", "instances.json")
+logs_file = define_path("logs", "provisioning.log")
+bash_script_file = define_path("scripts", "install_services.sh")
+# print(json_config_file)
+# print(logs_file)
+# print(bash_script_file)
+
+
 # instances.json config file path config
-configs_dir = os.path.join(base_dir, "configs")
-json_config_file = os.path.join(configs_dir, "instances.json")
+#configs_dir = os.path.join(base_dir, "configs")
+#json_config_file = os.path.join(configs_dir, "instances.json")
 # provisioning.log file path config
-logs_dir = os.path.join(base_dir, "logs")
-logs_file = os.path.join(logs_dir, "provisioning.log")
+#logs_dir = os.path.join(base_dir, "logs")
+#logs_file = os.path.join(logs_dir, "provisioning.log")
+# install_services.sh file path config
+#script_dir = os.path.join(base_dir, "scripts")
+#bash_script_file = os.path.join(script_dir, "install_services.sh")
 
 # Create log and config dirs if not exists
-os.makedirs(configs_dir, exist_ok=True)
-os.makedirs(logs_dir, exist_ok=True)
+#os.makedirs(configs_dir, exist_ok=True)
+#os.makedirs(logs_dir, exist_ok=True)
    
 # Define logging configuration
 logging.basicConfig(
@@ -88,7 +109,7 @@ def append_vm_spec(config_file, vm_specs):
 
 def provision_machines():
     while True:
-        user_input = input("Would you like to provision machines? (yes/no) ").lower().strip()
+        user_input = input("\nWould you like to provision machines? (yes/no) ").lower().strip()
         if user_input == "yes":
         #user_input = "yes"
             while True:
@@ -121,7 +142,6 @@ def provision_machines():
                         if user_input_another_vm == "yes":
                             break 
                         elif user_input_another_vm == "no":
-                            print("\nNo further actions are required")
                             return
                         else:
                             print("\nInvalid answer, try again")
@@ -132,12 +152,29 @@ def provision_machines():
                         exit()
         elif user_input == "no":
             print("\nOk. Exiting\n")
-            break
+            exit()
         else:
             print("\nInvalid answer. Try again.\n")
             continue
 
+def run_bash_script():
+    # Load and parse instances.json file as a json object
+    with open(json_config_file, 'r') as f:
+        machines = json.load(f)
+    for machine in machines:
+        name = machine['name']
+        print(f"\nTrying to install Nginx on '{name}'")
+        try:
+            subprocess.run([bash_script_file, name])
+        except:
+            print("script execution failed")
+
+
+
+print(f"\nSee '{logs_file}' for execution information, errors, and results.")
+time.sleep(3)
 provision_machines()
+run_bash_script()
 
 print("Script contination")
 logging.info("Application run has been completed")
