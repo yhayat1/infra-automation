@@ -94,7 +94,7 @@ def run_bash_script():
     for machine in machines:
         name = machine['name']
         print(f"\nTrying to install Nginx on '{name}'..")
-        # time.sleep(1)
+        time.sleep(1)
         result = subprocess.run([bash_script_file, name], capture_output=True, text=True)
         if result.returncode != 0:
             logging.error(f"Script failed for '{name}': {result.stderr}")
@@ -104,7 +104,7 @@ def run_bash_script():
 logging.info("Application started")
 
 print(f"\nSee '{logs_file}' for execution information, errors, and results.")
-#time.sleep(3)
+time.sleep(3)
 provision_machines()
 run_bash_script()
 
