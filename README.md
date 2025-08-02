@@ -101,8 +101,11 @@ python -m venv venv
 # Activate the virtual environment
 venv\Scripts\activate
 
+# If required, temporarily allow scripts execution by running:
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
 # Verify you're in the virtual environment (optional)
-where python
+Get-Command python
 # Should show: C:\path\to\your\project\venv\Scripts\python.exe
 ```
 
