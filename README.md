@@ -105,7 +105,7 @@ venv\Scripts\activate
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
 # Verify you're in the virtual environment (optional)
-where python
+Get-Command python
 # Should show: C:\path\to\your\project\venv\Scripts\python.exe
 ```
 
