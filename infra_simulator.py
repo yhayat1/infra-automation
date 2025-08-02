@@ -103,9 +103,10 @@ def run_bash_script():
 
 logging.info("Application started")
 
-print(f"\nSee '{logs_file}' for execution information, errors, and results.")
-time.sleep(3)
 provision_machines()
 run_bash_script()
+
+print(f"\nSee '{logs_file}' for execution information, errors, and results.")
+time.sleep(3)
 
 logging.info("Application run has been completed")
