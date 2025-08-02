@@ -243,7 +243,7 @@ The application maintains detailed logs in `logs/provisioning.log` with the foll
 - **Input Validation**: Pydantic models ensure data integrity
 - **File Operations**: Graceful handling of missing or corrupted configuration files
 - **Script Execution**: Subprocess error capture and logging
-- **Exception Handling**: Try-catch blocks with appropriate error messages
+- **Exception Handling**: Try-except blocks with appropriate error messages
 
 ## Future Enhancements
 
