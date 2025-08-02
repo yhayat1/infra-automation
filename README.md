@@ -60,6 +60,7 @@ infra-automation/
 ## Prerequisites
 
 - **Python 3.7+** (Python 3.8+ recommended)
+- **Python3 venv** (python3 virtual environment package installed)
 - **pip** (Python package installer)
 - **Bash shell** (for service installation scripts)
 - **Git** (for version control)
