@@ -18,19 +18,20 @@ The tool allows users to define virtual machines (VMs) dynamically, validates in
 
 ```
 infra-automation/
-├── scripts/                    # Bash automation scripts
-│   └── install_services.sh    # Nginx installation automation
-├── configs/                    # Configuration files (auto-generated)
-│   ├── instances.json         # VM specifications storage
-│   └── nginx_servers.txt      # Tracking Nginx installations
-├── logs/                      # Application logs (auto-generated)
-│   └── provisioning.log      # Main application log file
-├── src/                       # Python source modules
-│   ├── models.py             # Pydantic data models and validation
-│   └── machines.py           # Machine creation functionality
-├── infra_simulator.py         # Main application entry point
-├── requirements.txt           # Python dependencies
-└── README.md                 # Project documentation
+├── scripts/                                    # Bash automation scripts
+│   └── install_services.sh                   # Nginx installation automation
+├── configs/                                   # Configuration files (auto-generated)
+│   ├── instances.json                        # VM specifications storage
+│   └── nginx_servers.txt                     # Tracking Nginx installations
+├── logs/                                      # Application logs (auto-generated)
+│   └── provisioning.log                     # Main application log file
+├── src/                                       # Python source modules
+│   ├── models.py                             # Pydantic data models and validation
+│   └── machines.py                           # Machine creation functionality
+├── infra_simulator.py                         # Main application entry point (Pydantic version)
+├── infra_simulator_self_data_validation.py   # Backup of original custom validation version
+├── requirements.txt                           # Python dependencies
+└── README.md                                 # Project documentation
 ```
 
 ## Features
@@ -48,14 +49,36 @@ infra-automation/
 
 ### 🚀 Service Automation
 - Bash script integration for service installation
-- Nginx installation automation with duplicate prevention
+- Nginx installation automation with intelligent duplicate prevention
 - Cross-platform script execution using Python's subprocess module
+- Service tracking to avoid redundant installations
 
 ### 📊 Logging & Monitoring
 - Comprehensive logging system using Python's logging module
 - Timestamped log entries for troubleshooting
 - Error tracking and success confirmation
 - Log file: `logs/provisioning.log`
+
+## Project Evolution
+
+This project has evolved through several development phases, demonstrating iterative improvement and best practices adoption:
+
+### Phase 1: Custom Validation (Preserved in `infra_simulator_self_data_validation.py`)
+- **Initial Implementation**: Custom input validation using regular expressions and manual checks
+- **Learning Focus**: Basic Python validation techniques and error handling
+- **File Preserved**: The original implementation is maintained as a backup for educational reference
+
+### Phase 2: Pydantic Integration (Current `infra_simulator.py`)
+- **Modern Validation**: Migration to Pydantic for robust data validation and type safety
+- **Enhanced Error Handling**: Automatic validation with detailed error messages
+- **Code Simplification**: Reduced code complexity through Pydantic's built-in validators
+
+### Phase 3: Enhanced Service Management
+- **Smart Installation Logic**: Bash script now tracks installed services to prevent duplicates
+- **Improved Logging**: Better integration between Python and Bash script logging
+- **Service Persistence**: Maintains state of installed services across runs
+
+This evolution demonstrates the progression from basic Python concepts to industry-standard practices, making it an excellent learning resource for DevOps development.
 
 ## Prerequisites
 
@@ -129,8 +152,14 @@ pip list
 Make sure your virtual environment is activated, then run:
 
 ```bash
+# Run the current Pydantic-based version (recommended)
 python infra_simulator.py
+
+# Alternative: Run the original custom validation version (for educational comparison)
+python infra_simulator_self_data_validation.py
 ```
+
+> **Note**: The main application (`infra_simulator.py`) uses modern Pydantic validation, while the backup version (`infra_simulator_self_data_validation.py`) demonstrates custom validation techniques. Both versions produce the same functionality but showcase different validation approaches.
 
 ### Interactive Workflow
 
@@ -211,23 +240,35 @@ pip install -r requirements.txt
 ## Code Architecture
 
 ### Data Models (`src/models.py`)
-- **VMSpec**: Pydantic model with comprehensive validation
-- Field validators for name format, OS support, and positive number validation
+- **VMSpec**: Pydantic BaseModel with comprehensive field validation
+- **Field Validators**: 
+  - `validate_name()`: Ensures VM names follow proper naming conventions
+  - `validate_os()`: Restricts OS to supported platforms (ubuntu, centos, windows)
+  - `validate_positive()`: Ensures CPU and RAM values are positive numbers
+- **Type Safety**: Automatic type conversion and validation through Pydantic
 
 ### Machine Management (`src/machines.py`)
 - **create_machine()**: Factory function for VM dictionary creation
 - Logging integration for machine creation tracking
+- Clean separation of concerns between validation and object creation
 
 ### Main Application (`infra_simulator.py`)
-- User input handling and validation workflow
-- JSON configuration management
-- Bash script execution via subprocess
-- Comprehensive logging setup
+- **Current Version**: Uses Pydantic for modern validation approach
+- User input handling with robust error management
+- JSON configuration management with safe file operations
+- Bash script execution via subprocess with error capture
+- Comprehensive logging setup with timestamps
+
+### Legacy Implementation (`infra_simulator_self_data_validation.py`)
+- **Backup Version**: Preserves original custom validation logic
+- Educational reference for comparing validation approaches
+- Demonstrates evolution from manual to framework-based validation
 
 ### Automation Scripts (`scripts/install_services.sh`)
-- Nginx installation automation
-- Duplicate installation prevention
-- Logging integration with main application
+- **Smart Installation Logic**: Checks for existing installations before proceeding
+- **Service Tracking**: Maintains `nginx_servers.txt` to track installed services
+- **Duplicate Prevention**: Avoids redundant installations across multiple runs
+- **Integrated Logging**: Seamless log integration with Python application
 
 ## Logging
 
