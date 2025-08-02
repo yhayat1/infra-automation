@@ -28,8 +28,9 @@ infra-automation/
 ├── src/                                       # Python source modules
 │   ├── models.py                             # Pydantic data models and validation
 │   └── machines.py                           # Machine creation functionality
+├── misc/                                      # Miscellaneous files and backups
+│   └── infra_simulator_self_data_validation.py   # Original custom validation version
 ├── infra_simulator.py                         # Main application entry point (Pydantic version)
-├── infra_simulator_self_data_validation.py   # Backup of original custom validation version
 ├── requirements.txt                           # Python dependencies
 └── README.md                                 # Project documentation
 ```
@@ -63,10 +64,10 @@ infra-automation/
 
 This project has evolved through several development phases, demonstrating iterative improvement and best practices adoption:
 
-### Phase 1: Custom Validation (Preserved in `infra_simulator_self_data_validation.py`)
+### Phase 1: Custom Validation (Preserved in `misc/infra_simulator_self_data_validation.py`)
 - **Initial Implementation**: Custom input validation using regular expressions and manual checks
 - **Learning Focus**: Basic Python validation techniques and error handling
-- **File Preserved**: The original implementation is maintained as a backup for educational reference
+- **File Preserved**: The original implementation is maintained in the misc folder for educational reference
 
 ### Phase 2: Pydantic Integration (Current `infra_simulator.py`)
 - **Modern Validation**: Migration to Pydantic for robust data validation and type safety
@@ -156,10 +157,10 @@ Make sure your virtual environment is activated, then run:
 python infra_simulator.py
 
 # Alternative: Run the original custom validation version (for educational comparison)
-python infra_simulator_self_data_validation.py
+python misc/infra_simulator_self_data_validation.py
 ```
 
-> **Note**: The main application (`infra_simulator.py`) uses modern Pydantic validation, while the backup version (`infra_simulator_self_data_validation.py`) demonstrates custom validation techniques. Both versions produce the same functionality but showcase different validation approaches.
+> **Note**: The main application (`infra_simulator.py`) uses modern Pydantic validation, while the backup version (`misc/infra_simulator_self_data_validation.py`) demonstrates custom validation techniques. Both versions produce the same functionality but showcase different validation approaches.
 
 ### Interactive Workflow
 
@@ -259,8 +260,8 @@ pip install -r requirements.txt
 - Bash script execution via subprocess with error capture
 - Comprehensive logging setup with timestamps
 
-### Legacy Implementation (`infra_simulator_self_data_validation.py`)
-- **Backup Version**: Preserves original custom validation logic
+### Legacy Implementation (`misc/infra_simulator_self_data_validation.py`)
+- **Backup Version**: Preserves original custom validation logic in misc folder
 - Educational reference for comparing validation approaches
 - Demonstrates evolution from manual to framework-based validation
 
