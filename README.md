@@ -243,7 +243,6 @@ The application maintains detailed logs in `logs/provisioning.log` with the foll
 ## Recent Updates
 
 ### Version Updates
-- **Removed Windows Support**: The application now supports only Ubuntu and CentOS operating systems
 - **Enhanced Project Structure**: Added misc directory for additional utilities
 - **Improved Documentation**: Updated README to reflect current project state
 
