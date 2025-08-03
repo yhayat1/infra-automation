@@ -78,7 +78,7 @@ infra-automation/
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/yhayat1/infra-automation.git
 cd infra-automation
 ```
 
