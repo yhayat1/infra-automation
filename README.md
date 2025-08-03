@@ -126,7 +126,7 @@ python infra_simulator.py
 1. **Start the Application**: The tool will prompt if you want to provision machines
 2. **Define VM Specifications**: Enter details for each virtual machine:
    - **VM Name**: Must start with a letter, can contain letters, numbers, hyphens, and underscores
-   - **Operating System**: Choose from ubuntu or centos
+   - **Operating System**: Choose from ubuntu, centos or Windows
    - **CPU Cores**: Number of CPU cores (positive number)
    - **RAM**: Memory allocation in GB (positive number)
 3. **Validation**: The system automatically validates all inputs using Pydantic
