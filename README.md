@@ -40,7 +40,6 @@ infra-automation/
 ### 🔧 VM Configuration & Validation
 - Interactive CLI for defining virtual machine specifications
 - Input validation using Pydantic for data integrity
-- Support for Linux operating systems (Ubuntu, CentOS)
 - CPU and RAM specification with validation
 
 ### 📝 Configuration Management
