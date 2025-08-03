@@ -1,5 +1,11 @@
 # DevOps Infrastructure Provisioning & Configuration Automation Project
 
+## ⚠️ LEARNING SIMULATION TOOL
+
+**This project simulates infrastructure provisioning for educational purposes. No actual machines or cloud resources are created.**
+
+---
+
 ## Overview
 
 This project is a Python-based automation tool developed as part of a DevOps course that simulates infrastructure provisioning and service configuration. It demonstrates fundamental DevOps concepts including infrastructure as code, automation, and modular programming practices.
