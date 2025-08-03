@@ -39,17 +39,16 @@ def load_existing_config(json_config_file):
     except (json.JSONDecodeError, FileNotFoundError):
         return []  # If corrupted or missing, fallback safely
     
-def append_vm_spec(config_file, vm_specs):
-    config = load_existing_config(config_file)
+def append_vm_spec(json_config_file, vm_specs):
+    config = load_existing_config(json_config_file)
     config.append(vm_specs)
-    with open(config_file, 'w') as f:
+    with open(json_config_file, 'w') as f:
         json.dump(config, f, indent=2)
 
 def provision_machines():
     while True:
         user_input = input("\nWould you like to provision machines? (yes/no) ").lower().strip()
         if user_input == "yes":
-        #user_input = "yes"
             while True:
                 # Take user input for VM deatils and specs            
                 name = input("\nEnter a VM Name: ").strip() 
@@ -60,14 +59,13 @@ def provision_machines():
                 # Validate data using the Pydantic class
                 try:
                     vm_specs = VMSpec(name=name, os=os, cpu=cpu, ram=ram)
-                    logging.info(f"'{vm_specs.name}' VM specification is valid.")
+                    logging.info(f"'{vm_specs.name}' VM specification is valid. Machine provisionig process has been started.")
                     # Call the "create machine" module to return a dict from values
                     vm_specs = create_machine(name, os, cpu, ram)  
                     # Append VM config to the json config file
                     append_vm_spec(json_config_file, vm_specs)
-
                 except Exception as e:
-                    logging.error(f"VM Validation error: {e}")
+                    logging.error(f"VM Validation error for machine name '{name}': {e}")
                     print(f"\nVM name '{name}' validation test failed. The VM won't be provisioned")
 
                 while True:
@@ -95,18 +93,19 @@ def run_bash_script():
         name = machine['name']
         print(f"\nTrying to install Nginx on '{name}'..")
         time.sleep(1)
+        # Bash script execution
         result = subprocess.run([bash_script_file, name], capture_output=True, text=True)
         if result.returncode != 0:
-            logging.error(f"Script failed for '{name}': {result.stderr}")
+            logging.error(f"Bash script failed for '{name}': {result.stderr}")
         else:
-            logging.info(f"Script executed for '{name}': {result.stdout.strip()}")
+            logging.info(f"Bash script executed for '{name}': {result.stdout.strip()}")
 
 logging.info("Application started")
 
-provision_machines()
-run_bash_script()
-
 print(f"\nSee '{logs_file}' for execution information, errors, and results.")
 time.sleep(3)
+
+provision_machines()
+run_bash_script()
 
 logging.info("Application run has been completed")

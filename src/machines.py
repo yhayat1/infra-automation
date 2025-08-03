@@ -8,5 +8,5 @@ def create_machine(name, os, cpu, ram):
         "cpu": cpu,
         "ram": ram
     }
-    logging.info(f"Machine created: {machine}")
+    logging.info(f"Machine provisioned: {machine}")
     return machine

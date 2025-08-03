@@ -28,6 +28,8 @@ infra-automation/
 ├── src/                       # Python source modules
 │   ├── models.py             # Pydantic data models and validation
 │   └── machines.py           # Machine creation functionality
+├── misc/                      # Additional utilities
+│   └── infra_simulator_self_data_validation.py  # Alternative validation approach
 ├── infra_simulator.py         # Main application entry point
 ├── requirements.txt           # Python dependencies
 └── README.md                 # Project documentation
@@ -38,7 +40,7 @@ infra-automation/
 ### 🔧 VM Configuration & Validation
 - Interactive CLI for defining virtual machine specifications
 - Input validation using Pydantic for data integrity
-- Support for multiple operating systems (Ubuntu, CentOS, Windows)
+- Support for Linux operating systems (Ubuntu, CentOS)
 - CPU and RAM specification with validation
 
 ### 📝 Configuration Management
@@ -92,23 +94,6 @@ which python
 # Should show: /path/to/your/project/venv/bin/python
 ```
 
-#### On Windows:
-
-```bash
-# Create a virtual environment
-python -m venv venv
-
-# Activate the virtual environment
-venv\Scripts\activate
-
-# If required, temporarily allow scripts execution by running:
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-
-# Verify you're in the virtual environment (optional)
-Get-Command python
-# Should show: C:\path\to\your\project\venv\Scripts\python.exe
-```
-
 ### 3. Install Dependencies
 
 With your virtual environment activated, install the required packages:
@@ -141,7 +126,7 @@ python infra_simulator.py
 1. **Start the Application**: The tool will prompt if you want to provision machines
 2. **Define VM Specifications**: Enter details for each virtual machine:
    - **VM Name**: Must start with a letter, can contain letters, numbers, hyphens, and underscores
-   - **Operating System**: Choose from ubuntu, centos, or windows
+   - **Operating System**: Choose from ubuntu or centos
    - **CPU Cores**: Number of CPU cores (positive number)
    - **RAM**: Memory allocation in GB (positive number)
 3. **Validation**: The system automatically validates all inputs using Pydantic
@@ -154,7 +139,7 @@ python infra_simulator.py
 Would you like to provision machines? (yes/no) yes
 
 Enter a VM Name: web-server-01
-Select the desired OS to be deployed to the VM: (Supported OS: ubuntu/centos/windows) ubuntu
+Select the desired OS to be deployed to the VM: (Supported OS: ubuntu/centos) ubuntu
 Insert the desired number of VM CPU cores (eg: 4): 2
 Insert the desired number of RAM to be allocated to the VM (size unit is in GB. eg: 16): 8
 
@@ -182,8 +167,6 @@ Virtual environments provide isolated Python environments for your projects, pre
 ```bash
 # Activate virtual environment (run this each time you work on the project)
 source venv/bin/activate  # Linux/macOS
-# OR
-venv\Scripts\activate     # Windows
 
 # Install new packages (only when venv is activated)
 pip install package-name
@@ -196,8 +179,6 @@ deactivate
 
 # Remove virtual environment (if needed)
 rm -rf venv  # Linux/macOS
-# OR
-rmdir /s venv  # Windows
 ```
 
 ### Troubleshooting Virtual Environment
@@ -217,6 +198,7 @@ pip install -r requirements.txt
 ### Data Models (`src/models.py`)
 - **VMSpec**: Pydantic model with comprehensive validation
 - Field validators for name format, OS support, and positive number validation
+- Support for Ubuntu and CentOS operating systems
 
 ### Machine Management (`src/machines.py`)
 - **create_machine()**: Factory function for VM dictionary creation
@@ -232,6 +214,9 @@ pip install -r requirements.txt
 - Nginx installation automation
 - Duplicate installation prevention
 - Logging integration with main application
+
+### Additional Utilities (`misc/`)
+- **infra_simulator_self_data_validation.py**: Alternative validation approach using custom validation functions
 
 ## Logging
 
@@ -249,6 +234,13 @@ The application maintains detailed logs in `logs/provisioning.log` with the foll
 - **Script Execution**: Subprocess error capture and logging
 - **Exception Handling**: Try-except blocks with appropriate error messages
 
+## Recent Updates
+
+### Version Updates
+- **Removed Windows Support**: The application now supports only Ubuntu and CentOS operating systems
+- **Enhanced Project Structure**: Added misc directory for additional utilities
+- **Improved Documentation**: Updated README to reflect current project state
+
 ## Future Enhancements
 
 This project is designed to evolve with additional DevOps learning:
@@ -257,6 +249,7 @@ This project is designed to evolve with additional DevOps learning:
 - **Docker Integration**: Containerized service deployment
 - **Configuration Management**: Ansible or similar tool integration
 - **Monitoring**: Real-time infrastructure monitoring
+- **Multi-Service Support**: Support for additional services beyond Nginx
 
 ## Development Guidelines
 
@@ -279,6 +272,39 @@ This project is designed to evolve with additional DevOps learning:
 3. Add appropriate tests for new functionality
 4. Update documentation as needed
 5. Submit pull requests for review
+
+## Troubleshooting
+
+### Common Issues
+
+**Virtual Environment Issues:**
+```bash
+# Recreate virtual environment
+rm -rf venv
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+**Permission Issues with Scripts:**
+```bash
+# Make bash script executable
+chmod +x scripts/install_services.sh
+```
+
+**Configuration File Issues:**
+```bash
+# Remove corrupted configuration files (they will be recreated)
+rm configs/instances.json
+rm configs/nginx_servers.txt
+```
+
+### Getting Help
+
+- Check the log file `logs/provisioning.log` for detailed error information
+- Verify all prerequisites are installed correctly
+- Ensure you're running the application from the correct directory
+- Check that the virtual environment is activated
 
 ## License
 
