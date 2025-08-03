@@ -34,7 +34,7 @@ infra-automation/
 ├── src/                       # Python source modules
 │   ├── models.py             # Pydantic data models and validation
 │   └── machines.py           # Machine creation functionality
-├── misc/                      # Additional utilities
+├── old/                       # Legacy utilities and deprecated code
 │   └── infra_simulator_self_data_validation.py  # Alternative validation approach
 ├── infra_simulator.py         # Main application entry point
 ├── requirements.txt           # Python dependencies
@@ -221,8 +221,8 @@ pip install -r requirements.txt
 - Duplicate installation prevention
 - Logging integration with main application
 
-### Additional Utilities (`misc/`)
-- **infra_simulator_self_data_validation.py**: Alternative validation approach using custom validation functions
+### Legacy Utilities (`old/`)
+- **infra_simulator_self_data_validation.py**: Alternative validation approach using custom validation functions (deprecated)
 
 ## Logging
 
@@ -243,7 +243,7 @@ The application maintains detailed logs in `logs/provisioning.log` with the foll
 ## Recent Updates
 
 ### Version Updates
-- **Enhanced Project Structure**: Added misc directory for additional utilities
+- **Enhanced Project Structure**: Renamed misc directory to old for legacy utilities
 - **Improved Documentation**: Updated README to reflect current project state
 
 ## Future Enhancements
