@@ -1,5 +1,11 @@
 # DevOps Infrastructure Provisioning & Configuration Automation Project
 
+## ⚠️ LEARNING SIMULATION TOOL
+
+**This project simulates infrastructure provisioning for educational purposes. No actual machines or cloud resources are created.**
+
+---
+
 ## Overview
 
 This project is a Python-based automation tool developed as part of a DevOps course that simulates infrastructure provisioning and service configuration. It demonstrates fundamental DevOps concepts including infrastructure as code, automation, and modular programming practices.
@@ -40,7 +46,7 @@ infra-automation/
 ### 🔧 VM Configuration & Validation
 - Interactive CLI for defining virtual machine specifications
 - Input validation using Pydantic for data integrity
-- Support for Linux operating systems (Ubuntu, CentOS)
+- Support for various operation systems (Ubuntu, CentOS, Windows)
 - CPU and RAM specification with validation
 
 ### 📝 Configuration Management
@@ -72,7 +78,7 @@ infra-automation/
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/yhayat1/infra-automation.git
 cd infra-automation
 ```
 
@@ -126,7 +132,7 @@ python infra_simulator.py
 1. **Start the Application**: The tool will prompt if you want to provision machines
 2. **Define VM Specifications**: Enter details for each virtual machine:
    - **VM Name**: Must start with a letter, can contain letters, numbers, hyphens, and underscores
-   - **Operating System**: Choose from ubuntu or centos
+   - **Operating System**: Choose from ubuntu, centos or windows
    - **CPU Cores**: Number of CPU cores (positive number)
    - **RAM**: Memory allocation in GB (positive number)
 3. **Validation**: The system automatically validates all inputs using Pydantic
@@ -237,7 +243,6 @@ The application maintains detailed logs in `logs/provisioning.log` with the foll
 ## Recent Updates
 
 ### Version Updates
-- **Removed Windows Support**: The application now supports only Ubuntu and CentOS operating systems
 - **Enhanced Project Structure**: Added misc directory for additional utilities
 - **Improved Documentation**: Updated README to reflect current project state
 
